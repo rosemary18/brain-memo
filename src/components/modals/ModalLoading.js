@@ -37,7 +37,7 @@ const ModalLoading = () => {
         runOnJS(setLoading)(false)
     }
 
-    ModalLoading.show = (value = 3000) => {
+    ModalLoading.show = (value = 2000) => {
         
         setLoading(true)
         load.value = 0

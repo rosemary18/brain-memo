@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { COLORS, IC_STAR, IMG_HEART, IMG_SAD, Styles } from '../../assets'
 import { HEIGHT } from '../../types'
@@ -38,7 +38,7 @@ const ModalGameResult = () => {
     // Renders
 
     const renderSuccess = () => (
-        <>
+        <TouchableOpacity style={styles.modal} activeOpacity={.9} onPress={handlerHide}>
             <Image source={IC_STAR} style={styles.img} resizeMode="contain" />
             <Text style={[Styles.bold3, { color: COLORS.GREEN, marginTop: 24 }]}>{type == 0 ? "Cerdas!" : type == 1? "Pro!" : "Jenius!"}</Text>
             <Text style={styles.descText}>{isImage ? "Yeay, Kamu memilih gambar yang benar!" : "Yeay, selamat kamu berhasil menyusun kotak dengan benar!"}</Text>
@@ -50,23 +50,23 @@ const ModalGameResult = () => {
                     </View>
                 )
             }
-        </>
+        </TouchableOpacity>
     )
 
     const renderFailed = () => (
-        <>
+        <TouchableOpacity style={styles.modal} activeOpacity={.9} onPress={handlerHide}>
             <Image source={IMG_SAD} style={styles.img} />
             <Text style={styles.descText}>Waduh, kamu memilih kotak yang salah. Coba lagi ya... </Text>
             <View style={{flexDirection: "row", alignItems: "center"}}>
                 <Text style={Styles.regularSmall}>-1</Text>
                 <Image source={IMG_HEART} style={{height: 16, width: 16, marginLeft: 4}} resizeMode="contain" />
             </View>
-        </>
+        </TouchableOpacity>
     )
 
     return (
         <Modal 
-            style={styles.modal}
+            style={{flex: 1, margin: 0}}
             isVisible={show}
             animationInTiming={300}
             animationOutTiming={300}

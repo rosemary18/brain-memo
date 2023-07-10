@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Image, StyleSheet, Text } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import Modal from 'react-native-modal'
 import { COLORS, IMG_HEART, Styles } from '../../assets'
 import { GlobalContext, HEIGHT } from '../../types'
@@ -62,7 +62,7 @@ const ModalEmptyHeart = ({isVisible, onClose}) => {
 
     return (
         <Modal 
-            style={styles.modal}
+            style={{flex: 1, margin: 0}}
             isVisible={isVisible}
             animationInTiming={300}
             animationOutTiming={300}
@@ -77,9 +77,11 @@ const ModalEmptyHeart = ({isVisible, onClose}) => {
             onBackButtonPress={handlerOnClose}
             onBackdropPress={handlerOnClose}
             deviceHeight={HEIGHT}>
-            <Image source={IMG_HEART} style={styles.img} resizeMode="contain" />
-            <Text style={[Styles.regular, { color: COLORS.GRAY_DARK, textAlign: "center", padding: 24 }]}>Energi kamu habis, tunggu beberapa saat lagi yaa</Text>
-            <Text style={[Styles.bold2, { textAlign: "center", padding: 24 }]}>{`0${time.minutes}`.slice(-2)} : {`0${time.seconds}`.slice(-2)}</Text>
+            <TouchableOpacity style={styles.modal} activeOpacity={.9} onPress={handlerOnClose}>
+                <Image source={IMG_HEART} style={styles.img} resizeMode="contain" />
+                <Text style={[Styles.regular, { color: COLORS.GRAY_DARK, textAlign: "center", padding: 24 }]}>Energi kamu habis, tunggu beberapa saat lagi yaa</Text>
+                <Text style={[Styles.bold2, { textAlign: "center", padding: 24 }]}>{`0${time.minutes}`.slice(-2)} : {`0${time.seconds}`.slice(-2)}</Text>
+            </TouchableOpacity>
         </Modal>
     )
 }

@@ -20,7 +20,7 @@ const GamePlayWord = ({ navigation, route }) => {
     const [play, setPlay] = useState(false)
     const [time, setTime] = useState(0)
     const [word, setWord] = useState(Array(params?.word?.length).fill(""))
-    const [shuffled, setShuffled] = useState([...params?.word?.split(''), ...Array(Math.floor(params?.word?.length*.3))])
+    const [shuffled, setShuffled] = useState([...params?.word?.split(''), ...Array(Math.floor(params?.word?.length*.2))])
 
     const insets = useSafeAreaInsets()
 
@@ -90,6 +90,7 @@ const GamePlayWord = ({ navigation, route }) => {
 
     const handlerCountScoreTime = () => {
 
+        
         clearInterval(timeID)
         timeScore = 0
         timeID = setInterval(() => timeScore += 1, 1000);
@@ -113,10 +114,12 @@ const GamePlayWord = ({ navigation, route }) => {
         <View style={styles.instructionContainer}>
             <Image source={IC_NOTIFICATION} style={styles.instuctionIcon} resizeMode="contain" />
             <Text style={[Styles.semiBold, { textAlign: "center", padding: 24 }]}>Kata: [ {params?.word} ]</Text>
-            <Text style={[Styles.regularSmall, { textAlign: "center", paddingHorizontal: 24 }]}>PETUNJUK</Text>
-            <Text style={[Styles.regularSmall, { textAlign: "center", padding: 24, color: COLORS.GRAY_DARK }]}>
-                {`Perhatikan kota kotak abjad dan ingat baik baik. \nKamu akan diberikan waktu ${params?.seconds} detik untuk mengingat kotak kotak abjad. \nUrutkan abjad sesuai kata yang diminta.`}
-            </Text>
+            <Text style={[Styles.semiBold1, { textAlign: "center", paddingHorizontal: 24 }]}>PETUNJUK</Text>
+            <View style={{ padding: 24 }}>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>{`1. Perhatikan kota kotak abjad dan ingat baik baik.`}</Text>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>{`2. Kamu akan diberikan waktu ${params?.seconds} detik untuk mengingat kotak kotak abjad.`}</Text>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>{`3. Urutkan abjad sesuai kata yang diminta.`}</Text>
+            </View>
             <TouchableOpacity
                 style={styles.btn}
                 onPress={handlerPlay}
@@ -150,23 +153,24 @@ const GamePlayWord = ({ navigation, route }) => {
                     <>
                         <View style={styles.head}>
 
-                            {
-                                time > 0 && (
-                                    <View style={styles.timeContainer}>
-                                        <Text style={[Styles.semiBold1, { color: COLORS.RED }]}>{`00:0${time}`}</Text>
-                                    </View>
-                                )
-                            }
 
                             <View style={styles.key}>
                                 <Text style={Styles.semiBold1}>{params?.word}</Text>
                             </View>
-                            <View style={styles.formWord}>
-                                { word?.map(renderWord) }
-                            </View>
+                            {
+                                time > 0 ? (
+                                    <View style={styles.timeContainer}>
+                                        <Text style={[Styles.semiBold1, { color: COLORS.RED }]}>{`00:0${time}`}</Text>
+                                    </View>
+                                ) : (
+                                    <View style={styles.formWord}>
+                                        { word?.map(renderWord) }
+                                    </View>                                        
+                                )
+                            }
 
                         </View>
-                        <View style={styles.canvas}>
+                        <View style={[styles.canvas, { borderColor: (time%2) == 0 ? COLORS.GRAY10 : COLORS.RED }]}>
                             <View style={styles.lists}>
                                 {shuffled.map(renderCard)}
                             </View>
@@ -283,9 +287,8 @@ const styles = StyleSheet.create({
         borderColor: COLORS.RED,
         borderWidth: 1,
         padding: 4,
-        position: "absolute",
-        right: 12,
         paddingHorizontal: 6,
+        marginTop: 12
     },
     formWord: {
         flexDirection: "row",
@@ -298,14 +301,14 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     canvas: {
-        minHeight: 400,
+        minHeight: 200,
         borderRadius: 10,
         borderWidth: 1.5,
         borderColor: COLORS.GRAY10,
         backgroundColor: COLORS.WHITE,
         margin: 16,
         marginTop: 12,
-        padding: 8
+        padding: 12
     },
     cardContainer: {
         height: 70,

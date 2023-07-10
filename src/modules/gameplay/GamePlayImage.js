@@ -33,7 +33,7 @@ const GamePlayImage = ({ navigation, route }) => {
         const selectedImage = _shuffled?.splice?.(params?.option, 1)?.[0]
         const options = _shuffled?.slice?.(-(params?.option-1))
 
-        const shuff = [...Array(Math.floor(params?.option*.3)), ...options, selectedImage]
+        const shuff = [...Array(Math.floor(params?.option*.2)), ...options, selectedImage]
 
         setPlay(true)
         setTime(params?.seconds)
@@ -110,10 +110,18 @@ const GamePlayImage = ({ navigation, route }) => {
     const renderInstructions = () => (
         <View style={styles.instructionContainer}>
             <Image source={IC_NOTIFICATION} style={styles.instuctionIcon} resizeMode="contain" />
-            <Text style={[Styles.regularSmall, { textAlign: "center", padding: 24, paddingBottom: 0 }]}>PETUNJUK</Text>
-            <Text style={[Styles.regularSmall, { textAlign: "center", padding: 24, color: COLORS.GRAY_DARK }]}>
-                {`Perhatikan gambar dalam kotak.\nKamu akan diberikan waktu ${params?.seconds} detik untuk mengingat gambar gambar. \nPilih kotak gambar seperti yang diminta.`}
-            </Text>
+            <Text style={[Styles.semiBold1, { textAlign: "center", padding: 24, paddingBottom: 0 }]}>PETUNJUK</Text>
+            <View style={{padding: 24}}>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>
+                    {`1. Perhatikan gambar dalam kotak.`}
+                </Text>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>
+                    {`2. Kamu akan diberikan waktu ${params?.seconds} detik untuk mengingat gambar gambar.`}
+                </Text>
+                <Text style={[Styles.regular, { textAlign: "center", marginVertical: 4, color: COLORS.GRAY_DARK }]}>
+                    {`3. Pilih kotak gambar seperti yang diminta.`}
+                </Text>
+            </View>
             <TouchableOpacity
                 style={styles.btn}
                 onPress={handlerPlay}
@@ -143,20 +151,23 @@ const GamePlayImage = ({ navigation, route }) => {
                         <View style={styles.head}>
 
                             {
-                                time > 0 && (
+                                time > 0 ? (
                                     <View style={styles.timeContainer}>
                                         <Text style={[Styles.semiBold1, { color: COLORS.RED }]}>{`00:0${time}`}</Text>
                                     </View>
+                                ) : (
+                                    <>
+                                        <View style={[styles.key, time > 0 && {opacity: 0}]}>
+                                            <Image source={image?.image} style={{height: 80, width: 80, borderRadius: 5, marginBottom: 8}} />
+                                        </View>
+                                        <Text style={[Styles.regular, { padding: 8 }, time > 0 && {opacity: 0}]}>{image?.name}</Text>                                    
+                                    </>
                                 )
                             }
 
-                            <View style={[styles.key, time > 0 && {opacity: 0}]}>
-                                <Image source={image?.image} style={{height: 80, width: 80, borderRadius: 5, marginBottom: 8}} />
-                            </View>
-                            <Text style={[Styles.regular, { padding: 8 }, time > 0 && {opacity: 0}]}>{image?.name}</Text>
 
                         </View>
-                        <View style={styles.canvas}>
+                        <View style={[styles.canvas, { borderColor: (time%2) == 0 ? COLORS.GRAY10 : COLORS.RED }]}>
                             <View style={styles.lists}>
                                 {shuffled.map(renderCard)}
                             </View>
@@ -272,8 +283,6 @@ const styles = StyleSheet.create({
         borderColor: COLORS.RED,
         borderWidth: 1,
         padding: 4,
-        position: "absolute",
-        right: 12,
         paddingHorizontal: 6,
     },
     formWord: {
@@ -287,14 +296,14 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     canvas: {
-        minHeight: 400,
+        minHeight: 200,
         borderRadius: 10,
         borderWidth: 1.5,
         borderColor: COLORS.GRAY10,
         backgroundColor: COLORS.WHITE,
         margin: 16,
         marginTop: 12,
-        padding: 8
+        padding: 12
     },
     cardContainer: {
         height: 100,

@@ -65,7 +65,18 @@ const RootNavigator = () => {
 					<RootStack.Screen
 						name="DASHBOARD_NAVIGATOR"
 						component={DashboardNavigator}
-						options={{ ...transitionConfig }} />
+						options={({ navigation, route }) => {
+
+							navigation.addListener("beforeRemove", (e) => {
+								// e.preventDefault()
+								// console.log("Dilarang putar arah!!!")
+							});
+							
+							return {
+								gestureEnabled: false,
+								...transitionConfig
+							}
+						}} />
 				
 					<RootStack.Screen
 						name="GAMEPLAY_NAVIGATOR"
