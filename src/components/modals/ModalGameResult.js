@@ -17,7 +17,10 @@ const ModalGameResult = () => {
 
     // Handlers
 
-    const handlerHide = () => setShow(false)
+    const handlerHide = () => {
+        setShow(false)
+        Player.play("backsound", "mp3", false)
+    }
 
     ModalGameResult.show = (success = false, addHeart = false, image = false, type = 0) => {
 

@@ -44,7 +44,6 @@ const Setting = ({ navigation }) => {
 
     return (
         <View style={[Styles.container, { padding: 12 }]}>
-            { xf >= 7 && <Text style={[Styles.semiBold1, { color: COLORS.GRAY_DARK, textAlign: "center", margin: 12 }]} onPress={handlerStartOver}>Main baru</Text>}
             <View style={styles.row}>
                 <Image source={IC_VOLUME} style={styles.music} resizeMode="contain" />
                 <Text style={[Styles.semiBold1, { color: COLORS.GRAY_DARK, marginHorizontal: 12 }]}>Volume</Text>
@@ -69,6 +68,7 @@ const Setting = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            { xf >= 7 && <Text style={[Styles.semiBold1, { color: COLORS.GRAY_DARK, textAlign: "center", margin: 12 }]} onPress={handlerStartOver}>Main baru</Text>}
         </View>
     )
 }

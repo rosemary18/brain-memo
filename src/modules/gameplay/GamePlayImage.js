@@ -33,7 +33,7 @@ const GamePlayImage = ({ navigation, route }) => {
         const selectedImage = _shuffled?.splice?.(params?.option, 1)?.[0]
         const options = _shuffled?.slice?.(-(params?.option-1))
 
-        const shuff = [...Array(Math.floor(params?.option*.2)), ...options, selectedImage]
+        const shuff = [...Array(Math.floor(params?.option*.1)), ...options, selectedImage]
 
         setPlay(true)
         setTime(params?.seconds)

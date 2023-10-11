@@ -12,7 +12,7 @@ const Player = () => {
 
     // Handlers
 
-    Player.play = (name, type) => {
+    Player.play = (name, type, play = true) => {
 
         if (name && type) {
             SoundPlayer?.stop?.()

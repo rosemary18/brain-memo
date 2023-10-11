@@ -20,7 +20,7 @@ const GamePlayWord = ({ navigation, route }) => {
     const [play, setPlay] = useState(false)
     const [time, setTime] = useState(0)
     const [word, setWord] = useState(Array(params?.word?.length).fill(""))
-    const [shuffled, setShuffled] = useState([...params?.word?.split(''), ...Array(Math.floor(params?.word?.length*.2))])
+    const [shuffled, setShuffled] = useState([...params?.word?.split(''), ...Array(Math.floor(params?.word?.length*.1))])
 
     const insets = useSafeAreaInsets()
 
@@ -221,7 +221,7 @@ const Card = ({ open = false, onOpen, visible = true, item, index }) => {
         setTimeout(async () => {
             const correct = await onOpen?.(item)
             setIncorrect(!correct)
-        }, 300);
+        }, 0);
     }
 
     // Effects
